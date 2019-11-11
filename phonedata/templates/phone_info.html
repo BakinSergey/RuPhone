@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+{% extends "main.html" %}
+{% block title %} Phone Info {% endblock %}
+{% block main %}
+    <span> &nbsp; </span>
+    <form class="input-group" action="{% url 'home' %}" method="get" accept-charset="utf-8">
+        <input type="text" placeholder="только цифры(без +), от 5 до 11 знаков" class="input form-control" name="q">
+        <span class="input-group-btn">
+            <button type="submit" class="btn btn btn-primary"> <i class="fa fa-search"></i> Поиск</button>
+    </span>
+    </form>
+    <span> &nbsp; </span>
+    {% if messages %}
+        <ul class="messagelist">
+            {% for message in messages %}
+                <li class="{{ message.tags }}"> {{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endblock %}

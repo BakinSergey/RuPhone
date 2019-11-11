@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <div id='header'>
+        <h1>Russian Phone App</h1>
+    </div>
+    <div id='main'>
+        {% block main %}
+        {% endblock %}
+    </div>
+    <div id='footer'>
+        <p>Test Application /2019</p>
+        <p>(SAB43@List.ru)</p>
+    </div>
+{% endblock %}
