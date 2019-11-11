@@ -12,7 +12,7 @@ async def fetch_reestr(url, session: aiohttp.ClientSession):
     async with session.get(url, allow_redirects=True) as responce:
         data = await responce.read()
         data = csv.reader(data.decode('utf-8').splitlines(), delimiter=';')
-        insert_csvblob(data)
+        insert_csvblob(data, url)
 
 
 async def update_reestr():

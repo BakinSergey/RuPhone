@@ -29,12 +29,18 @@ def truncate_phone_table():
         conn.commit()
 
 
-def insert_csvblob(csv_blob):
+def insert_csvblob(csv_blob, reestr_url):
     data = [(r[0], r[1], r[2], r[4], r[5],) for r in csv_blob]
 
     conn = connect_db()
     with closing(conn) as conn:
         cur = conn.cursor()
-        insert_query = "insert into phonedata_phonerange (code, start, finish, provider, region) values %s"
-        psycopg2.extras.execute_values(cur, insert_query, data, template=None, page_size=100)
-        conn.commit()
+        try:
+            insert_query = "insert into phonedata_phonerange (code, start, finish, provider, region) values %s"
+            psycopg2.extras.execute_values(cur, insert_query, data, template=None, page_size=100)
+        except:
+            print('except was raised')
+
+        finally:
+            print(f'reestr {reestr_url.split("/")[-1]} was loaded')
+            conn.commit()
