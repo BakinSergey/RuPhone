@@ -22,7 +22,9 @@ def connect_db():
 
 
 def truncate_phone_table():
+
     conn = connect_db()
+
     with closing(conn) as conn:
         cur = conn.cursor()
         cur.execute('TRUNCATE TABLE phonedata_phonerange')
@@ -31,16 +33,18 @@ def truncate_phone_table():
 
 def insert_csvblob(csv_blob, reestr_url):
     data = [(r[0], r[1], r[2], r[4], r[5],) for r in csv_blob]
+    reestr = reestr_url.split("/")[-1]
 
     conn = connect_db()
+
     with closing(conn) as conn:
         cur = conn.cursor()
         try:
             insert_query = "insert into phonedata_phonerange (code, start, finish, provider, region) values %s"
             psycopg2.extras.execute_values(cur, insert_query, data, template=None, page_size=100)
         except:
-            print('except was raised')
+            print(f'except was raised with {reestr} loading')
 
         finally:
-            print(f'reestr {reestr_url.split("/")[-1]} was loaded')
+            print(f'reestr {reestr} was loaded')
             conn.commit()
